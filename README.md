@@ -12,3 +12,5 @@ Your personal customizable content feed
 5. Run `dotnet build content-feed.csproj` and wait for the build to finish
 6. Run `dotnet run content-feed.csproj`
 7. Open the [local feed](https://localhost:5001/)
+
+Note: if there is an issue with certificates please run `dotnet dev-certs https --trust` and click 'Yes' in the popup.
