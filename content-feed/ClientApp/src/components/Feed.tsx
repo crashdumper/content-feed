@@ -44,10 +44,21 @@ class Feed extends React.PureComponent<FeedProps> {
                                         height="315px" 
                                         position="relative"/>;
                         }
+                        
+                        if (contentItem.type == "coub") {                            
+                            result =
+                                <Iframe url={contentItem.link.replace('view', 'embed')}
+                                        width="560px"
+                                        height="315px"
+                                        position="relative"/>;
+                        }
 
-                        return result;
+                        return <div>
+                            {result}
+                            <br/>
+                        </div>;
                     }
-                )}
+                )}                
             </div>
         );
     }

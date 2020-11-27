@@ -21,13 +21,28 @@
         public IEnumerable<ContentItemModel> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 1).Select(index => new ContentItemModel()
+            List<ContentItemModel> predefined = new List<ContentItemModel>
+            {
+                new ContentItemModel
                 {
                     Id = Guid.NewGuid().ToString(),
                     Link = "https://www.youtube.com/watch?v=uMeR2W19wT0",
                     Type = "youtube"
-                })
-                .ToArray();
+                },
+                new ContentItemModel
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Link = "https://coub.com/view/2lr6vd",
+                    Type = "coub"
+                },
+                new ContentItemModel
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Link = "https://www.youtube.com/watch?v=Y1s_WAxNCCw",
+                    Type = "youtube"
+                },
+            };
+            return predefined;
         }
     }
 }
