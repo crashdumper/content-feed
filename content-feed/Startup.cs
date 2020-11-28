@@ -51,14 +51,14 @@ namespace content_feed
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             
-            app.UseStaticFiles(new StaticFileOptions()
+            app.UseSpaStaticFiles();
+
+            app.UseSpaStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(),"ClientApp", "public", "images")),
+                    Path.Combine(Directory.GetCurrentDirectory(),"ClientApp", "build", "images")),
                 RequestPath = new PathString("/images")
             });
-
-            app.UseSpaStaticFiles();
 
             app.UseRouting();
 

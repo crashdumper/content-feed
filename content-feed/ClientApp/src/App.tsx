@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import Feed from './components/Feed';
+import MobileFeed from './components/MobileFeed';
 
 import './custom.css'
 
@@ -14,5 +15,6 @@ export default () => (
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
         <Route path='/contentFeed/:lastContentItemId?' component={Feed} />
+        <Route path='/mobileFeed/:lastContentItemId?' component={MobileFeed} />
     </Layout>
 );

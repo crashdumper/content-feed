@@ -78,7 +78,7 @@
 
         private static string GetLinkFromFileName(string fileName)
         {
-            return $"https://localhost:5001/static/images/{fileName}";
+            return $"https://localhost:5001/images/{fileName}";
         }
 
 
@@ -136,7 +136,7 @@
         [HttpPost]
         public void AddImage([FromForm]IFormFile file)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp","build", "static", "images", file.FileName);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp","build", "images", file.FileName);
             
             if (System.IO.File.Exists(path))
             {
@@ -150,7 +150,7 @@
             ContentItemModel itemModel = new ContentItemModel
             {
                 Id = Guid.NewGuid().ToString(),
-                Link = $"https://{this.Request.Host.Value}/static/images/{file.FileName}",
+                Link = $"https://{this.Request.Host.Value}/images/{file.FileName}",
                 Type = "image"
             };
 
