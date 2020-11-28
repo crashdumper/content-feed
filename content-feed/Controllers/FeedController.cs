@@ -108,7 +108,7 @@
                 Id = Guid.NewGuid().ToString(),
                 Link = url,
             };
-            string host = uri.Host.Replace("www.", "");
+            string host = uri.Host.Replace("www.", "").Replace("clips.", "");
             string itemType;
             switch (host)
             {

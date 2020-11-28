@@ -55,7 +55,7 @@ class MobileFeed extends React.PureComponent<FeedProps> {
                                                  position="relative"/>;
                                 break;
                             case "twitch":
-                                result = <Iframe url={"https://clips.twitch.tv/embed?clip=" + contentItem.link.substring(contentItem.link.lastIndexOf('/')+1) + "&parent=" +  + window.location.hostname}
+                                result = <Iframe url={"https://clips.twitch.tv/embed?clip=" + contentItem.link.substring(contentItem.link.lastIndexOf('/')+1) + "&parent=" +  window.location.hostname}
                                                  frameBorder={0}
                                                  allowFullScreen={true}
                                                  scrolling="no"
