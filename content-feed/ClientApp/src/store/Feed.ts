@@ -25,6 +25,8 @@ export interface ContentItemModel {
 
 export interface AddNewContentItemAction { type: 'ADD_NEW_CONTENT_ITEM', link: string }
 
+export interface AddNewImageAction { type: 'ADD_NEW_IMAGE', image: File }
+
 export interface ReceiveContentAction {
     type: 'RECEIVE_CONTENT';
     lastContentItemId: string;
@@ -40,14 +42,27 @@ export interface RequestContentAction {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type KnownAction = AddNewContentItemAction | ReceiveContentAction | RequestContentAction;
+export type KnownAction = AddNewContentItemAction | ReceiveContentAction | RequestContentAction | AddNewImageAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    addNewContentItem: () => ({ type: 'ADD_NEW_CONTENT_ITEM' } as AddNewContentItemAction),
+    addNewContentItem: (url: string, callback: any) : AppThunkAction<KnownAction> => (dispatch, getState) => {
+        fetch(`feed/add`, {method: 'POST',headers:{'content-type': 'application/json'}, body: JSON.stringify({url: url})}).then(() => {
+            callback("pull");
+            dispatch({type: 'ADD_NEW_CONTENT_ITEM', link: url})
+        })
+    },
+    addNewImage: (image: File, callback: any) : AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let formData = new FormData();
+        formData.append('file', image);
+        fetch(`feed/addImage`, {method: 'POST',  body: formData}).then(() => {
+            callback("pull");
+            dispatch({type: 'ADD_NEW_IMAGE', image: image})
+        })
+    },
     getContent: (lastContentItemId : string, lastContentItemDate : Date) : AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         const appState = getState();
@@ -58,7 +73,7 @@ export const actionCreators = {
                     && lastContentItemId !== "" 
                     && appState.feed.lastContentItemId !== ""
                 || appState.feed.lastContentItemId === "")) {
-            fetch(`feed`)
+            fetch(`feed/get`)
                 .then(response => response.json() as Promise<ContentItemModel[]>)
                 .then(data => {
                     dispatch({type: 'RECEIVE_CONTENT', lastContentItemId: lastContentItemId, lastContentItemDate: new Date(), contentItems: data});
@@ -105,6 +120,8 @@ export const reducer: Reducer<FeedState> = (state: FeedState | undefined, incomi
                 contentItems: state.contentItems,
                 isLoading: true
             };
+        case "ADD_NEW_CONTENT_ITEM":
+            {}
         default:
             return state;
     }

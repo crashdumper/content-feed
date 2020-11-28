@@ -9,6 +9,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace content_feed
 {
+    using System.IO;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.FileProviders;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -46,6 +50,14 @@ namespace content_feed
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(),"ClientApp", "public", "images")),
+                RequestPath = new PathString("/images")
+            });
+
             app.UseSpaStaticFiles();
 
             app.UseRouting();
